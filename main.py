@@ -157,6 +157,15 @@ async def handle_loan(interaction: discord.Interaction, item: str, action: str):
             await interaction.response.send_message(f"⚠️ Už máš **{item}** zapůjčený!", ephemeral=True)
             return
 
+        # ✅ NOVÝ LIMIT: Pouze 1 osoba najednou!
+        if len(current_borrowers) >= 1:
+            borrower_name = await get_user_name(guild, current_borrowers[0])
+            await interaction.response.send_message(
+                f"❌ **{item}** už má **{borrower_name}**! Počkej, až ji vrátí.",
+                ephemeral=True
+            )
+            return
+
         current_borrowers.append(user_id)
         loans[item] = current_borrowers
         message = f"✅ Vzal si si **{item}**! 🎮"
@@ -248,4 +257,3 @@ async def on_ready():
 
 token = os.getenv("DISCORD_TOKEN")
 bot.run(token)
-
