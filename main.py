@@ -187,7 +187,7 @@ async def handle_loan(interaction: discord.Interaction, item: str, action: str):
     # Plánuj aktualizaci (ne okamžitě)
     if not update_pending:
         update_pending = True
-        await asyncio.sleep(1)
+        await asyncio.sleep(3)
         update_pending = False
         await update_all_messages()
 
