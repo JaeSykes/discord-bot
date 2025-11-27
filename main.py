@@ -1,4 +1,4 @@
-import discord
+,import discord
 from discord.ext import commands
 from discord.ui import Button, View
 import json
@@ -248,3 +248,4 @@ async def on_ready():
 
 token = os.getenv("DISCORD_TOKEN")
 bot.run(token)
+
