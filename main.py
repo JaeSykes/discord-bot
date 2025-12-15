@@ -214,7 +214,7 @@ async def create_item_embed(item_name, emoji, borrowers_entries, guild):
 
 class ItemLoanView(View):
     def __init__(self, item_name):
-        super().__init__(timeout=None)  # ← OPRAVENO: timeout=None pro persistent
+        super().__init__(timeout=None)
         self.item_name = item_name
 
     @discord.ui.button(label="Půjčit", style=discord.ButtonStyle.green, custom_id="borrow_btn")
@@ -232,7 +232,7 @@ class ItemLoanView(View):
 
 class ReminderView(View):
     def __init__(self, item_name):
-        super().__init__(timeout=None)  # ← OPRAVENO: timeout=None
+        super().__init__(timeout=None)
         self.item_name = item_name
 
     @discord.ui.button(label="Vrátit", style=discord.ButtonStyle.danger, custom_id="reminder_return_btn")
@@ -255,6 +255,18 @@ async def handle_loan(interaction: discord.Interaction, item: str, action: str):
     global update_pending
 
     guild = interaction.guild
+    
+    # ✅ OPRAVA: Pokud je interakce z DM (guild je None), nastavíme si ji
+    if not guild:
+        guild = bot.get_guild(SERVER_ID)
+    
+    if not guild:
+        await interaction.response.send_message(
+            "❌ Chyba: Nemůžu se připojit k serveru!",
+            ephemeral=True
+        )
+        return
+
     role = discord.utils.get(guild.roles, name=ROLE_NAME)
 
     # Kontrola role
@@ -467,9 +479,6 @@ async def on_ready():
             print(f"✅ Kanál: {channel.name}")
             await update_all_messages()
             print("✅ Systém připraven!")
-
-    # Views se registrují automaticky přes timeout=None v třídách
-    # Není potřeba je ručně registrovat
 
     if not reminder_loop.is_running():
         reminder_loop.start()
