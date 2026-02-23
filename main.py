@@ -27,8 +27,6 @@ REMINDER_48H = 48 * 60 * 60
 # Itemy (BEZ počtu kusů)
 ITEMS_LIST = [
     ("Baium ring", "💍"),
-    ("Frintezza necklace", "📿"),
-    ("Freya necklace", "❄️"),
     ("Ant queen ring", "👑"),
 ]
 
