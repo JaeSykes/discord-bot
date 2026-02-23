@@ -28,6 +28,7 @@ REMINDER_48H = 48 * 60 * 60
 ITEMS_LIST = [
     ("Baium ring", "💍"),
     ("Ant queen ring", "👑"),
+    ("Dynasty pole - Crit stun 150 WIND", "🦯"),
 ]
 
 # Flag pro pending updates
